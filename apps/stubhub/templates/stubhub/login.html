@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Log In</title>
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'stubhub/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+  
+</head>
+{% include 'stubhub/snippets/nav.html' %}
+<div class="container">
+    <div class="content">
+    {% if request.session.nli_source != 'None' %}
+    <h1>You must login before posting tickets for sale.  Please login or register below.</h1>
+    {% endif %}
+    <body>
+        <div class="reg_content">
+
+            <div class="login">
+                <h3 class="grey_text">Login</h3>
+                <form action="/login_attempt" method="POST">
+                    {% csrf_token %}
+                    Email:<br>
+                    <input type="text" name="email"><br>
+                    Password:<br>
+                    <input class='password_input' type="password" name="password"><br>
+                    <input class="button" type="submit" value="Log In">
+                </form>
+            </div>
+            <div class="register">
+                <h3 class="grey_text">Create Account</h3>
+                <form action="/registration_attempt" method="post">
+                    {% csrf_token %}
+                    First name:<br>
+                    <input type="text" name="first_name"><br>
+                    Last name:<br>
+                    <input type="text" name="last_name"><br>
+                    Email:<br>
+                    <input type="text" name="email"><br>
+                    Password:<br>
+                    <input class='password_input' type="password" name="password"><br>
+                    Confirm Password:<br>
+                    <input class='password_input' type="password" name="confirm"><br>
+                    <input class="button" type="submit" value="Create Account">
+                </form>
+            </div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        </div>
+    </body>
+    </div>
+</div>
+</html>

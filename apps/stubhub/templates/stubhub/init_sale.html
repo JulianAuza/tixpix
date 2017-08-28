@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sell Tickets</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stubhub/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+</head>
+
+{% include 'stubhub/snippets/nav.html' %}
+
+<div class="container">
+<body>
+
+
+
+    <div class="content">
+
+        <h1>Sell a ticket to {{ event.title }}:</h1>
+
+        <p>How many tickets would you like to sell?</p>
+
+        <form action="/sell/{{event.id}}" method="post">
+            {% csrf_token %}
+            <select name="num_tix" onchange="this.form.submit()">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+        </form>
+
+
+        <form action="/sell/{{event.id}}/post_tickets" method="post">
+            {% csrf_token %}
+
+            {% if tix %}
+
+                <p>Please enter the seat numbers of your {{ num_tix }} tickets:</p>
+
+                {% for i in tix %}
+
+                    {{ i }}. <input type="text" name='seat_{{i}}'>
+                    <br>
+
+
+                {% endfor %}
+
+                <p>And enter the price per ticket:</p>
+                $<input type="text" name="price">
+                <input type="hidden" name="num_tix" value='{{num_tix}}'>
+                <input type="submit" value="Post Tickets" name="">
+
+            {% endif %}
+
+            <!-- <label for="seat">Seat: </label>
+            <input type="text" id="seat" name="seat">
+            <br>
+            <label for="price">Price: </label>
+            <input type="text" id="price" name="price">
+            <br>
+            <input type="submit" value="Post Tickets" name="">   -->
+        </form>
+
+    </div>
+</body>
+</div>
+</html>

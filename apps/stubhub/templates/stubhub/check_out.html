@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'stubhub/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+    <link rel="script" href="{% static 'stubhub/script/script.js' %}" media="screen" title="no title"  charset="utf-8">    
+    <title>Tix Pix Checkout</title>
+</head>
+
+
+{% include 'stubhub/snippets/nav.html' %}
+<body>
+    <div class="container">
+        <div class="content_card">
+            <h3 class="grey_text">Purchase Summary</h3>
+            <hr>
+            <div class="cart_content">
+                <br>
+                <br>
+                <table>
+                    <tr>
+                        <th>Event</th>
+                        <th>Seat</th>
+                        <th>Price</th>
+                        <th>Venue</th>
+                    </tr>
+                    {%for ticket in items%}
+                    <tr>
+                        <td>{{ticket.event.title}}</td>
+                        <td>{{ticket.seat_num}}{{ticket.seat_letter}}</td>
+                        <td>${{ticket.price}}</td>
+                        <td>{{ticket.event.venue.name}}</td>
+                    </tr>
+                    {%endfor%}
+                </table>
+            </div>
+            <br>
+            <br>
+            <hr>
+            <div class="checkout_cta">
+                <h3>TOTAL: ${{total}}</h3>
+                <form action="/payment_shipping" method="POST">
+                    {% csrf_token %}
+                <input class="button" type="submit" value="To Payment/Shipping">
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

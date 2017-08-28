@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'stubhub/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+     <link rel="script" href="{% static 'stubhub/script/script.js' %}" media="screen" title="no title"  charset="utf-8">    
+    <title>TixPix Cart</title>
+</head>
+
+
+{% include 'stubhub/snippets/nav.html' %}
+<body>
+    <div class="container">
+        <div class="content">
+            <h3 class="grey_text">Shopping Cart</h3>
+            <hr>
+            <div class="content_card">
+                {% if messages %}
+                    <ul class="error">
+                        {% for message in messages %}
+                        {%if "CE" in message.tags%}
+                        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                        {%endif%}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <table id='cart_table'>
+                    <tr>
+                        <th>Event</th>
+                        <th>Seat</th>
+                        <th>Price</th>
+                        <th>Venue</th>
+                        <th>Remove</th>
+                    </tr>
+                    {%for ticket in items%}
+                    <tr>
+                        <td>{{ticket.event.title}}</td>
+                        <td>{{ticket.seat_num}}{{ticket.seat_letter}}</td>
+                        <td>${{ticket.price}}</td>
+                        <td>{{ticket.event.venue.name}}</td>
+                        <td>
+                            <form action="/remove_from_cart/{{ticket.id}}" method="POST">
+                                {% csrf_token %}
+                                <input class="link" type="submit" value="Remove from cart">
+                            </form>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </table>
+                <br>
+                <hr>
+                <form class= "cart_checkout" action="/check_out" method="POST">
+                <p>TOTAL: ${{total}}</p>
+                {% csrf_token %}
+                 <input class="button" type="submit" value="Check Out">
+                </form>
+                </div>
+            
+            
+        </div>
+    </div>
+</body>
+</html>

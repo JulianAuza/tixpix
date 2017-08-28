@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TixPix</title>
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'stubhub/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+    <link rel="script" href="{% static 'stubhub/script/script.js' %}" media="screen" title="no title"  charset="utf-8">    
+</head>
+
+{% include 'stubhub/snippets/nav.html' %}
+<div>
+{% include 'stubhub/snippets/search_bar.html' %}
+</div>
+<div class="container">
+<body>
+    <div class="content">
+        <h3 class="grey_text">{{num_results}} results for {{query}}</h3>
+        <hr>
+        <br>
+    <div class="list_container">
+    <div id='events_list'>
+        {% include 'stubhub/snippets/event_list.html' %}
+    </div>
+    </div>
+    </div>
+</body>
+</div>
+</html>
